@@ -2,38 +2,72 @@ const { statusCodes } = require("../response/httpStatusCodes");
 const { statusMessage } = require("../response/httpStatusMessages");
 const { messages } = require("../response/customMesages");
 const { sendOTP } = require("../utils/sendOTP.js");
-const  Users  = require("../models/users.js");
+const user = require('../models/userdetails')
 
-const findUserService = async (params,isSendOTP =false) => {
-    params.isDeleted  =  false
-    const UserData = await Users.findOne(params);
-    if (UserData) {
-        if(isSendOTP)
-        {
-            console.log(UserData)
-            const user = UserData;
-            const otp = await sendOTP(user.mobileNumber);
-            console.log(otp);
-            user.otp = otp;
-            await user.save();
-        }
+
+const createUserService = async(params = {}) => {
+    try {
+        const User = new user(params)
+        const savedUser = await User.save()
         return {
-          status: true,
-          data: UserData,
-          message: messages.success,
-          statusCode: statusCodes.HTTP_OK,
+            status: true,
+            data: savedUser,
+            message: messages.success,
+            statusCode: statusCodes.HTTP_OK,
         };
-      } else {
+    } catch {
         return {
-          status: false,
-          statusCode: statusCodes.HTTP_BAD_REQUEST,
-          message: messages.invalidCredentials,
-          data: [],
+            status: false,
+            statusCode: statusCodes.HTTP_BAD_REQUEST,
+            message: messages.alreadyExist,
+            data: [],
         };
-      }
-};
+    }
+}
+
+const getAllUsers = async() => {
+    try {
+        const userList = await user.find()
+        return {
+            status: true,
+            data: userList,
+            message: messages.success,
+            statusCode: statusCodes.HTTP_OK,
+        };
+    } catch {
+        return {
+            status: false,
+            statusCode: statusCodes.HTTP_BAD_REQUEST,
+            message: messages.somethingWrong,
+            data: [],
+        };
+    }
+}
+
+const getUser = async(params) => {
+    try {
+        const User = await user.find({ _id: params._id })
+        return {
+            status: true,
+            data: User,
+            message: messages.success,
+            statusCode: statusCodes.HTTP_OK,
+        };
+
+    } catch (error) {
+        console.log(error);
+        return {
+            status: false,
+            statusCode: statusCodes.HTTP_BAD_REQUEST,
+            message: messages.somethingWrong,
+            data: [],
+        };
+    }
+}
 
 
 module.exports = {
-    findUserService
+    createUserService,
+    getAllUsers,
+    getUser
 };
