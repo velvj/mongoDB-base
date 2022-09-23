@@ -77,29 +77,10 @@ const userValidation = (req, res, next) => {
 }
 
 
-const kycValidation = (req, res, next) => {
-    const schema = joi.object({
-        userId: joi.string().required(),
-        address: joi.string().required(),
-        pinCode: joi.string().length(6).required(),
-        panNo: joi.string().length(10).required(),
-        nomineeDetails: joi.object().keys({
-            name: joi.string().required(),
-            mobileNumber: joi.string().length(10).required(),
-            email: joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).lowercase().required()
-        }),
-        nearestShowroom: joi.string(),
-        referralEmpCode: joi.string().required(),
-        isAcceptedTerms: joi.boolean().required()
-    })
-    return bodyParamValidation(req, res, next, schema)
-}
-
 
 module.exports = {
     bodyParamValidation,
     queryParamValidation,
     loginValidation,
-    userValidation,
-    kycValidation
+    userValidation
 };

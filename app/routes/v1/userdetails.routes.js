@@ -4,16 +4,15 @@ const { Router } = require("express");
 const { userValidation } = require("../../validator/validator.js");
 
 //Controllers
-const { userRegistration, getUserById, getUserList } = require("../../controllers//userManagement.controller");
-
+const { userRegistration, updateUser, getUserById, getUserList } = require("../../controllers//userManagement.controller");
 
 // validations setup
 const router = Router();
 const { errHandle } = require("../../utils/errHandle.js");
-
 router.post("/details/addUser", [userValidation], errHandle(userRegistration));
 router.get("/details/detailsList", getUserList);
 router.get("/details/:_id", errHandle(getUserById));
+router.put("/details/update", [userValidation], errHandle(updateUser));
 
 
 module.exports = router;

@@ -66,8 +66,30 @@ const getUser = async(params) => {
 }
 
 
+const updateUserService = async(params) => {
+    try {
+        const User = await user.findByIdAndUpdate({ _id: params._id }, { $set: params }, { new: true })
+        return {
+            status: true,
+            data: User,
+            message: messages.updated,
+            statusCode: statusCodes.HTTP_OK,
+        };
+
+    } catch (error) {
+        console.log(error);
+        return {
+            status: false,
+            statusCode: statusCodes.HTTP_BAD_REQUEST,
+            message: messages.somethingWrong,
+            data: [],
+        };
+    }
+}
+
 module.exports = {
     createUserService,
     getAllUsers,
-    getUser
+    getUser,
+    updateUserService
 };
