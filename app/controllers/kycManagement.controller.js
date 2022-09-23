@@ -1,12 +1,11 @@
-const { generateRandomOtp } = require('../helpers/generateOtp');
+const mongoose = require('mongoose')
+const userKyc = require('../models/kyc')
 const { sendErrorResponse, sendSuccessResponse } = require("../response/response");
-const { createUserService, updateUserService, getAllUsersService, getUserService } = require('../services/userAuth.service');
+const { createKycService, getAllKycsService, getKycService, updateKycService } = require('../services/userKyc.service');
 
-
-const userRegistration = async(req, res) => {
+const kycRegistration = async(req, res) => {
     const params = req.body;
-    params.otp = generateRandomOtp()
-    const result = await createUserService({...params });
+    const result = await createKycService(params);
     if (!result.status) {
         return sendErrorResponse(
             req,
@@ -25,10 +24,9 @@ const userRegistration = async(req, res) => {
     }
 };
 
-
-const updateUser = async(req, res) => {
+const updateKyc = async(req, res) => {
     const body = req.body;
-    const result = await updateUserService(body);
+    const result = await updateKycService(body);
     if (!result.status) {
         return sendErrorResponse(
             req,
@@ -47,9 +45,8 @@ const updateUser = async(req, res) => {
     }
 };
 
-
-const getUserList = async(req, res) => {
-    const result = await getAllUsersService();
+const getUserKycList = async(req, res) => {
+    const result = await getAllKycsService();
     if (!result.status) {
         return sendErrorResponse(
             req,
@@ -68,10 +65,9 @@ const getUserList = async(req, res) => {
     };
 }
 
-
-const getUserById = async(req, res) => {
+const getKycById = async(req, res) => {
     const params = req.params;
-    const result = await getUserService(params);
+    const result = await getKycService(params);
     if (!result.status) {
         return sendErrorResponse(
             req,
@@ -92,4 +88,4 @@ const getUserById = async(req, res) => {
 
 
 
-module.exports = { userRegistration, getUserList, getUserById, updateUser }
+module.exports = { kycRegistration, updateKyc, getUserKycList, getKycById }

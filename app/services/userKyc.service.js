@@ -1,16 +1,16 @@
 const { statusCodes } = require("../response/httpStatusCodes");
 const { statusMessage } = require("../response/httpStatusMessages");
 const { messages } = require("../response/customMesages");
-const user = require('../models/userdetails')
+const userKyc = require('../models/kyc')
 
-
-const createUserService = async(params = {}) => {
+const createKycService = async(params = {}) => {
     try {
-        const User = new user(params)
-        const savedUser = await User.save()
+        const Kyc = new userKyc(params)
+        const savedKyc = await Kyc.save()
+        const post = await userKyc.populate(savedKyc, { path: 'userId', select: ['name', 'mobileNumber', 'email', 'otp'] })
         return {
             status: true,
-            data: savedUser,
+            data: post,
             message: messages.success,
             statusCode: statusCodes.HTTP_OK,
         };
@@ -24,12 +24,12 @@ const createUserService = async(params = {}) => {
     }
 }
 
-const getAllUsersService = async() => {
+const getAllKycsService = async() => {
     try {
-        const userList = await user.find()
+        const kycList = await userKyc.find().populate('userId', 'name mobileNumber email otp').select(['-_id', '-createdAt', '-updatedAt', '-__v'])
         return {
             status: true,
-            data: userList,
+            data: kycList,
             message: messages.success,
             statusCode: statusCodes.HTTP_OK,
         };
@@ -43,12 +43,12 @@ const getAllUsersService = async() => {
     }
 }
 
-const getUserService = async(params) => {
+const getKycService = async(params) => {
     try {
-        const User = await user.find({ _id: params._id })
+        const kyc = await userKyc.find({ _id: params._id }).populate('userId', 'name mobileNumber email otp').select(['-_id', '-createdAt', '-updatedAt', '-__v'])
         return {
             status: true,
-            data: User,
+            data: kyc,
             message: messages.success,
             statusCode: statusCodes.HTTP_OK,
         };
@@ -64,12 +64,12 @@ const getUserService = async(params) => {
 }
 
 
-const updateUserService = async(params) => {
+const updateKycService = async(params) => {
     try {
-        const User = await user.findByIdAndUpdate({ _id: params._id }, { $set: params }, { new: true })
+        const editKyc = await userKyc.findByIdAndUpdate({ _id: params._id }, { $set: params }, { new: true })
         return {
             status: true,
-            data: User,
+            data: editKyc,
             message: messages.updated,
             statusCode: statusCodes.HTTP_OK,
         };
@@ -85,8 +85,8 @@ const updateUserService = async(params) => {
 }
 
 module.exports = {
-    createUserService,
-    getAllUsersService,
-    getUserService,
-    updateUserService
+    createKycService,
+    getAllKycsService,
+    getKycService,
+    updateKycService
 };

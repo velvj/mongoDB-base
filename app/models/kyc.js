@@ -4,10 +4,15 @@ const userSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'users'
+        ref: 'userdetails'
+    },
+    isOtpVerified: {
+        type: Boolean,
+        default: true
     },
     address: {
-        type: String
+        type: String,
+        required: true
     },
     pinCode: {
         type: String,
@@ -31,6 +36,8 @@ const userSchema = new mongoose.Schema({
         },
         email: {
             type: String,
+            required: true,
+            unique: true,
             trim: true,
         }
     },
@@ -38,10 +45,12 @@ const userSchema = new mongoose.Schema({
         type: String
     },
     referralEmpCode: {
-        type: String
+        type: String,
+        required: true
     },
     isAcceptedTerms: {
-        type: Boolean
+        type: Boolean,
+        default: true
     }
 }, { timestamps: true });
 
