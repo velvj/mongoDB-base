@@ -16,21 +16,21 @@ const userSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
-    isDeleted: {
-        type: Boolean,
-        default: false
-    },
     otp: {
         type: String
     },
     isOtpSent: {
         type: Boolean,
         default: true
-    }
+    },
+    isDeleted: {
+        type: Boolean,
+        default: false
+    },
 }, { timestamps: true })
 
-userSchema.pre('save', async function() {
-    return new Promise(async(resolve, reject) => {
+userSchema.pre('save', async function () {
+    return new Promise(async (resolve, reject) => {
         const mobileNumberExists = await user.findOne({ mobileNumber: this.get('mobileNumber') })
             .then(doc => { return doc ? true : false })
             .catch(err => reject(err));
@@ -38,8 +38,8 @@ userSchema.pre('save', async function() {
             .then(doc => { return doc ? true : false })
             .catch(err => reject(err));
         if (mobileNumberExists || emailExists) {
-            const err = JSON.stringify({ inUse: { email: emailExists, mobileNumber: mobileNumberExists } });
-            reject(err)
+            const err = mobileNumberExists ? emailExists ? "Mobile number && Email" : "Mobile number" : emailExists ? "Email" : "";
+            reject(new Error(err + ' already exist'))
         } else {
             resolve();
         }
