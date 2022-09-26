@@ -19,6 +19,13 @@ const userSchema = new mongoose.Schema({
     otp: {
         type: String
     },
+    isOtpVerified: {
+        type: Boolean,
+        default: false
+    },
+    mpin: {
+        type: Number
+    },
     isOtpSent: {
         type: Boolean,
         default: true

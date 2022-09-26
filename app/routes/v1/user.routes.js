@@ -1,21 +1,21 @@
 const { Router } = require("express");
 
-// validator schemas
-const { userValidation } = require("../../validator/validator.js");
+const { userValidation, mpinValidation, verifyOtpValidation, loginValidation } = require("../../validator/validator.js");
 
-//Controllers
-const { userRegistration, updateUser, getUserById, getUserList } = require("../../controllers/userManagement.controller");
+const { userRegistration, updateUser, getUserById, getUserList, createMpin, verifyOtp, login } = require("../../controllers/userManagement.controller");
 
-// validations setup
-const router = Router();
 const { errHandle } = require("../../utils/errHandle.js");
 const { authMiddleware } = require("../../utils/auth.js");
-router.post("/addUser",
-    [userValidation],
-    errHandle(userRegistration));
-router.get("/userList", getUserList);
-router.get("/:_id", [authMiddleware], errHandle(getUserById));
-router.put("/update", [userValidation], errHandle(updateUser));
 
+const router = Router();
+
+router.post("/add_user", [userValidation], errHandle(userRegistration));
+router.post("/verify_otp", [verifyOtpValidation], errHandle(verifyOtp));
+router.post("/create_mpin", [mpinValidation], errHandle(createMpin));
+router.post("/login", [loginValidation], errHandle(login));
+router.get("/user_list", [authMiddleware], getUserList);
+router.get("/:_id", [authMiddleware], errHandle(getUserById));
+router.put("/update", [authMiddleware, userValidation], errHandle(updateUser));
+router.post("/create_mpin", [mpinValidation], errHandle(createMpin));
 
 module.exports = router;

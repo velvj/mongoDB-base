@@ -3,8 +3,7 @@ const { statusMessage } = require("../response/httpStatusMessages");
 const { messages } = require("../response/customMesages");
 const user = require('../models/user')
 
-
-const createUserService = async(params = {}) => {
+const createUserService = async (params = {}) => {
     try {
         const User = new user(params)
         const savedUser = await User.save()
@@ -24,7 +23,7 @@ const createUserService = async(params = {}) => {
     }
 }
 
-const getAllUsersService = async() => {
+const getAllUsersService = async () => {
     try {
         const userList = await user.find()
         return {
@@ -43,9 +42,9 @@ const getAllUsersService = async() => {
     }
 }
 
-const getUserService = async(params) => {
+const getUserService = async (id) => {
     try {
-        const User = await user.find({ _id: params._id })
+        const User = await user.findById(id)
         return {
             status: true,
             data: User,
@@ -63,10 +62,9 @@ const getUserService = async(params) => {
     }
 }
 
-
-const updateUserService = async(params) => {
+const updateUserService = async (params, id) => {
     try {
-        const User = await user.findByIdAndUpdate({ _id: params._id }, { $set: params }, { new: true })
+        const User = await user.findByIdAndUpdate({ _id: id }, { $set: params }, { new: true })
         return {
             status: true,
             data: User,

@@ -58,7 +58,8 @@ const queryParamValidation = (req, res, next, schama) => {
 
 const loginValidation = (req, res, next) => {
     const schema = joi.object({
-        mobileNumber: joi.number().required()
+        id: joi.string().required(),
+        mpin: joi.number().required()
     });
     return bodyParamValidation(req, res, next, schema);
 };
@@ -95,10 +96,28 @@ const kycValidation = (req, res, next) => {
     return bodyParamValidation(req, res, next, schema)
 }
 
+const mpinValidation = (req, res, next) => {
+    const schema = joi.object({
+        id: joi.string().required(),
+        mpin: joi.number().required()
+    })
+    return bodyParamValidation(req, res, next, schema)
+}
+
+const verifyOtpValidation = (req, res, next) => {
+    const schema = joi.object({
+        id: joi.string().required(),
+        otp: joi.number().required()
+    })
+    return bodyParamValidation(req, res, next, schema)
+}
+
 module.exports = {
     bodyParamValidation,
     queryParamValidation,
     loginValidation,
     userValidation,
-    kycValidation
+    kycValidation,
+    mpinValidation,
+    verifyOtpValidation
 };
