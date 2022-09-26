@@ -14,11 +14,11 @@ const createUserService = async(params = {}) => {
             message: messages.success,
             statusCode: statusCodes.HTTP_OK,
         };
-    } catch {
+    } catch (error) {
         return {
             status: false,
-            statusCode: statusCodes.HTTP_BAD_REQUEST,
-            message: messages.alreadyExist,
+            statusCode: statusCodes.HTTP_INTERNAL_SERVER_ERROR,
+            message: error.message,
             data: [],
         };
     }
@@ -33,11 +33,11 @@ const getAllUsersService = async() => {
             message: messages.success,
             statusCode: statusCodes.HTTP_OK,
         };
-    } catch {
+    } catch (error) {
         return {
             status: false,
-            statusCode: statusCodes.HTTP_BAD_REQUEST,
-            message: messages.somethingWrong,
+            statusCode: statusCodes.HTTP_INTERNAL_SERVER_ERROR,
+            message: error.message,
             data: [],
         };
     }
@@ -56,8 +56,8 @@ const getUserService = async(params) => {
     } catch (error) {
         return {
             status: false,
-            statusCode: statusCodes.HTTP_BAD_REQUEST,
-            message: messages.somethingWrong,
+            statusCode: statusCodes.HTTP_INTERNAL_SERVER_ERROR,
+            message: error.message,
             data: [],
         };
     }
@@ -77,8 +77,8 @@ const updateUserService = async(params) => {
     } catch (error) {
         return {
             status: false,
-            statusCode: statusCodes.HTTP_BAD_REQUEST,
-            message: messages.somethingWrong,
+            statusCode: statusCodes.HTTP_INTERNAL_SERVER_ERROR,
+            message: error.message,
             data: [],
         };
     }

@@ -89,7 +89,8 @@ const kycValidation = (req, res, next) => {
         }),
         nearestShowroom: joi.string(),
         referralEmpCode: joi.string().required(),
-        isAcceptedTerms: joi.boolean().required()
+        isAcceptedTerms: joi.boolean().required(),
+        isDeleted: joi.boolean()
     })
     return bodyParamValidation(req, res, next, schema)
 }

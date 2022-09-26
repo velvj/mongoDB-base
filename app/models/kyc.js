@@ -51,6 +51,10 @@ const userSchema = new mongoose.Schema({
     isAcceptedTerms: {
         type: Boolean,
         default: true
+    },
+    isDeleted: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true });
 
