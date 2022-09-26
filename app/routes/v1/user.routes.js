@@ -9,10 +9,10 @@ const { userRegistration, updateUser, getUserById, getUserList } = require("../.
 // validations setup
 const router = Router();
 const { errHandle } = require("../../utils/errHandle.js");
-router.post("/user/addUser", [userValidation], errHandle(userRegistration));
-router.get("/user/detailsList", getUserList);
-router.get("/user/:_id", errHandle(getUserById));
-router.put("/user/update", [userValidation], errHandle(updateUser));
+router.post("/addUser", [userValidation], errHandle(userRegistration));
+router.get("/detailsList", getUserList);
+router.get("/:_id", errHandle(getUserById));
+router.put("/update", [userValidation], errHandle(updateUser));
 
 
 module.exports = router;
