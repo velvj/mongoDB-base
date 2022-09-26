@@ -5,7 +5,7 @@ const { userValidation, mpinValidation, verifyOtpValidation, loginValidation } =
 const { userRegistration, updateUser, getUserById, getUserList, createMpin, verifyOtp, login } = require("../../controllers/userManagement.controller");
 
 const { errHandle } = require("../../utils/errHandle.js");
-const { authMiddleware } = require("../../utils/auth.js");
+const { authMiddleware } = require("../../middleware/authMiddleware.js");
 
 const router = Router();
 
