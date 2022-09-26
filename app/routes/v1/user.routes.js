@@ -1,20 +1,18 @@
+const { Router } = require("express");
 
-const {Router} = require("express");
 // validator schemas
-
-const {loginValidation} = require("../../validator/validator.js");
+const { userValidation } = require("../../validator/validator.js");
 
 //Controllers
-const { login } = require("../../controllers/userAuthManagement.controller");
-// validations setup
+const { userRegistration, updateUser, getUserById, getUserList } = require("../../controllers/userManagement.controller");
 
+// validations setup
 const router = Router();
 const { errHandle } = require("../../utils/errHandle.js");
-router.post(
-  "/user/login",
-  [loginValidation],
-  errHandle(login)
-);
+router.post("/user/addUser", [userValidation], errHandle(userRegistration));
+router.get("/user/detailsList", getUserList);
+router.get("/user/:_id", errHandle(getUserById));
+router.put("/user/update", [userValidation], errHandle(updateUser));
 
 
 module.exports = router;

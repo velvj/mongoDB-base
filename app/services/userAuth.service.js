@@ -1,7 +1,7 @@
 const { statusCodes } = require("../response/httpStatusCodes");
 const { statusMessage } = require("../response/httpStatusMessages");
 const { messages } = require("../response/customMesages");
-const user = require('../models/userdetails')
+const user = require('../models/user')
 
 
 const createUserService = async(params = {}) => {
