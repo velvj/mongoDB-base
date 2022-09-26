@@ -2,7 +2,6 @@ const { getUserService } = require("../services/userAuth.service");
 const { verifyToken } = require("../utils/auth");
 const { tokenHeaderKey } = require("../config");
 
-
 const authMiddleware = async (req, res, next) => {
     const token = req.header(tokenHeaderKey);
     if (!token) {
@@ -16,6 +15,5 @@ const authMiddleware = async (req, res, next) => {
     req.user = data;
     return next();
 }
-
 
 module.exports = { authMiddleware };

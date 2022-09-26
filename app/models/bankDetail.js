@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
 
-const bankDetailsSchema = new mongoose.Schema({
+const bankDetailSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
@@ -32,6 +32,6 @@ const bankDetailsSchema = new mongoose.Schema({
     }
 }, { timestamps: true });
 
-const BankDetails = mongoose.model("bankDetails", bankDetailsSchema);
+const BankDetail = mongoose.model("bankDetail", bankDetailSchema);
 
-module.exports = BankDetails;
+module.exports = BankDetail;

@@ -5,6 +5,27 @@ const { createUserService, updateUserService, getAllUsersService, getUserService
 const { generateToken } = require('../utils/auth');
 const { messages } = require("../response/customMesages");
 
+const addBankDetail = async (req, res) => {
+    const params = req.body;
+    const result = await createUserService({ ...params, userId: req?.user?.id });
+    if (!result.status) {
+        return sendErrorResponse(
+            req,
+            res,
+            result.statusCode,
+            result.message, []
+        );
+    } else {
+        return sendSuccessResponse(
+            req,
+            res,
+            result.statusCode,
+            result.message,
+            { id: result.data.id }
+        );
+    }
+};
+
 const userRegistration = async (req, res) => {
     const params = req.body;
     params.otp = generateRandomOtp();
@@ -178,4 +199,13 @@ const getUserById = async (req, res) => {
     };
 }
 
-module.exports = { userRegistration, getUserList, getUserById, updateUser, createMpin, verifyOtp, login }
+module.exports = {
+    userRegistration,
+    getUserList,
+    getUserById,
+    updateUser,
+    createMpin,
+    verifyOtp,
+    login,
+    addBankDetail
+}

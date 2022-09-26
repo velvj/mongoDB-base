@@ -77,6 +77,18 @@ const userValidation = (req, res, next) => {
     return bodyParamValidation(req, res, next, schema)
 }
 
+
+const addBankDetailValidation = (req, res, next) => {
+    const schema = joi.object({
+        accountHolderName: joi.string().required(),
+        bankName: joi.string().required(),
+        branch: joi.string().required(),
+        ifsc: joi.string().required(),
+        accountNumber: joi.string().required(),
+    })
+    return bodyParamValidation(req, res, next, schema);
+}
+
 const kycValidation = (req, res, next) => {
     const schema = joi.object({
         userId: joi.string().required(),
@@ -119,5 +131,6 @@ module.exports = {
     userValidation,
     kycValidation,
     mpinValidation,
-    verifyOtpValidation
+    verifyOtpValidation,
+    addBankDetailValidation
 };
