@@ -4,7 +4,7 @@ const userSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
-        ref: 'userdetails'
+        ref: 'user'
     },
     isOtpVerified: {
         type: Boolean,
