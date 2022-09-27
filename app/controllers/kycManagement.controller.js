@@ -1,16 +1,24 @@
-const mongoose = require('mongoose')
-const userKyc = require('../models/kyc')
 const { sendErrorResponse, sendSuccessResponse } = require("../response/response");
 const { createKycService, getAllKycsService, getKycService, updateKycService } = require('../services/userKyc.service');
 
-const kycRegistration = async(req, res) => {
-    const params = req.body;
-    const result = await createKycService(params);
+const { statusCodes } = require('../response/httpStatusCodes');
+const { messages } = require("../response/customMesages");
+
+const createKyc = async (req, res) => {
+    const params = req.body || {};
+    if (!params?.isAcceptedTerms) return sendErrorResponse(
+        req,
+        res,
+        statusCodes.HTTP_BAD_REQUEST,
+        "Accept Terms to continue",
+        []
+    );
+    const result = await createKycService({ ...params, userId: req?.user?.id });
     if (!result.status) {
         return sendErrorResponse(
             req,
             res,
-            result.statusCode,
+            statusCodes.HTTP_BAD_REQUEST,
             result.message, []
         );
     } else {
@@ -24,7 +32,7 @@ const kycRegistration = async(req, res) => {
     }
 };
 
-const updateKyc = async(req, res) => {
+const updateKyc = async (req, res) => {
     const body = req.body;
     const result = await updateKycService(body);
     if (!result.status) {
@@ -45,7 +53,7 @@ const updateKyc = async(req, res) => {
     }
 };
 
-const getUserKycList = async(req, res) => {
+const getUserKycList = async (req, res) => {
     const result = await getAllKycsService();
     if (!result.status) {
         return sendErrorResponse(
@@ -65,8 +73,8 @@ const getUserKycList = async(req, res) => {
     };
 }
 
-const getKycById = async(req, res) => {
-    const params = req.params;
+const getKycById = async (req, res) => {
+    const params = req?.params;
     const result = await getKycService(params);
     if (!result.status) {
         return sendErrorResponse(
@@ -88,4 +96,4 @@ const getKycById = async(req, res) => {
 
 
 
-module.exports = { kycRegistration, updateKyc, getUserKycList, getKycById }
+module.exports = { createKyc, updateKyc, getUserKycList, getKycById }

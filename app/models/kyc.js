@@ -6,10 +6,6 @@ const userSchema = new mongoose.Schema({
         required: true,
         ref: 'user'
     },
-    isOtpVerified: {
-        type: Boolean,
-        default: true
-    },
     address: {
         type: String,
         required: true
@@ -23,23 +19,8 @@ const userSchema = new mongoose.Schema({
         required: true
     },
     nomineeDetails: {
-        name: {
-            type: String,
-            required: true,
-            trim: true,
-        },
-        mobileNumber: {
-            type: String,
-            required: true,
-            unique: true,
-            trim: true,
-        },
-        email: {
-            type: String,
-            required: true,
-            unique: true,
-            trim: true,
-        }
+        type: String,
+        required: true
     },
     nearestShowroom: {
         type: String
