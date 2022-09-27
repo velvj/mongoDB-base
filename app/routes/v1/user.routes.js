@@ -2,7 +2,7 @@ const { Router } = require("express");
 
 const { userValidation, mpinValidation, verifyOtpValidation, loginValidation, addBankDetailValidation } = require("../../validator/validator.js");
 
-const { userRegistration, updateUser, getUserById, getUserList, createMpin, verifyOtp, login, addBankDetail } = require("../../controllers/userManagement.controller");
+const { userRegistration, updateUser, getUserById, getUserList, createMpin, verifyOtp, login } = require("../../controllers/userManagement.controller");
 
 const { errHandle } = require("../../utils/errHandle.js");
 const { authMiddleware } = require("../../middleware/authMiddleware.js");
@@ -17,6 +17,5 @@ router.get("/user_list", [authMiddleware], getUserList);
 router.get("/:_id", [authMiddleware], errHandle(getUserById));
 router.put("/update", [authMiddleware, userValidation], errHandle(updateUser));
 router.post("/create_mpin", [mpinValidation], errHandle(createMpin));
-router.post("/add_bank_details", [authMiddleware, addBankDetailValidation], errHandle(addBankDetail));
 
 module.exports = router;

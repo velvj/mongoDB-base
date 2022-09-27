@@ -5,46 +5,25 @@ const { createUserService, updateUserService, getAllUsersService, getUserService
 const { generateToken } = require('../utils/auth');
 const { messages } = require("../response/customMesages");
 
-const addBankDetail = async (req, res) => {
-    const params = req.body;
-    const result = await createUserService({ ...params, userId: req?.user?.id });
-    if (!result.status) {
-        return sendErrorResponse(
-            req,
-            res,
-            result.statusCode,
-            result.message, []
-        );
-    } else {
-        return sendSuccessResponse(
-            req,
-            res,
-            result.statusCode,
-            result.message,
-            { id: result.data.id }
-        );
-    }
-};
-
 const userRegistration = async (req, res) => {
     const params = req.body;
     params.otp = generateRandomOtp();
 
     const result = await createUserService({ ...params });
-    if (!result.status) {
+    if (!result?.status) {
         return sendErrorResponse(
             req,
             res,
-            result.statusCode,
-            result.message, []
+            result?.statusCode,
+            result?.message, []
         );
     } else {
         return sendSuccessResponse(
             req,
             res,
-            result.statusCode,
-            result.message,
-            { id: result.data.id }
+            result?.statusCode,
+            result?.message,
+            { id: result?.data?.id }
         );
     }
 };
@@ -52,20 +31,20 @@ const userRegistration = async (req, res) => {
 const updateUser = async (req, res) => {
     const { _id: id, ...params } = req.body;
     const result = await updateUserService(params, id);
-    if (!result.status) {
+    if (!result?.status) {
         return sendErrorResponse(
             req,
             res,
-            result.statusCode,
-            result.message, []
+            result?.statusCode,
+            result?.message, []
         );
     } else {
         return sendSuccessResponse(
             req,
             res,
-            result.statusCode,
-            result.message,
-            result.data
+            result?.statusCode,
+            result?.message,
+            result?.data
         );
     }
 };
@@ -77,16 +56,16 @@ const createMpin = async (req, res) => {
         return sendErrorResponse(
             req,
             res,
-            result.statusCode,
-            result.message, []
+            result?.statusCode,
+            result?.message, []
         );
     } else {
         return sendSuccessResponse(
             req,
             res,
-            result.statusCode,
-            result.message,
-            result.data
+            result?.statusCode,
+            result?.message,
+            result?.data
         );
     }
 };
@@ -114,8 +93,8 @@ const login = async (req, res) => {
         return sendSuccessResponse(
             req,
             res,
-            result.statusCode,
-            result.message,
+            result?.statusCode,
+            result?.message,
             { token }
         );
     }
@@ -144,8 +123,8 @@ const verifyOtp = async (req, res) => {
             return sendErrorResponse(
                 req,
                 res,
-                updateUser.statusCode,
-                updateUser.message,
+                updateUser?.statusCode,
+                updateUser?.message,
                 []
             );
         return sendSuccessResponse(
@@ -160,20 +139,20 @@ const verifyOtp = async (req, res) => {
 
 const getUserList = async (req, res) => {
     const result = await getAllUsersService();
-    if (!result.status) {
+    if (!result?.status) {
         return sendErrorResponse(
             req,
             res,
-            result.statusCode,
-            result.message, []
+            result?.statusCode,
+            result?.message, []
         );
     } else {
         return sendSuccessResponse(
             req,
             res,
-            result.statusCode,
-            result.message,
-            result.data
+            result?.statusCode,
+            result?.message,
+            result?.data
         );
     };
 }
@@ -181,22 +160,21 @@ const getUserList = async (req, res) => {
 const getUserById = async (req, res) => {
     const params = req.params;
     const result = await getUserService(params?._id);
-    if (!result.status) {
+    if (!result.status)
         return sendErrorResponse(
             req,
             res,
-            result.statusCode,
-            result.message, []
+            result?.statusCode,
+            result?.message,
+            []
         );
-    } else {
-        return sendSuccessResponse(
-            req,
-            res,
-            result.statusCode,
-            result.message,
-            result.data
-        );
-    };
+    return sendSuccessResponse(
+        req,
+        res,
+        result?.statusCode,
+        result?.message,
+        result?.data
+    );
 }
 
 module.exports = {
@@ -207,5 +185,4 @@ module.exports = {
     createMpin,
     verifyOtp,
     login,
-    addBankDetail
 }

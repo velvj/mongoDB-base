@@ -29,7 +29,11 @@ const bankDetailSchema = new mongoose.Schema({
     isDeleted: {
         type: Boolean,
         default: false
-    }
+    },
+    isAcceptedTerms: {
+        type: Boolean,
+        default: true
+    },
 }, { timestamps: true });
 
 const BankDetail = mongoose.model("bankDetail", bankDetailSchema);

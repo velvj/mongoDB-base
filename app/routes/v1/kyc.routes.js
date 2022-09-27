@@ -4,15 +4,15 @@ const { Router } = require("express");
 const { kycValidation } = require("../../validator/validator.js");
 
 //Controllers
-const { kycRegistration, updateKyc, getUserKycList, getKycById } = require("../../controllers/kycManagement.controller");
+const { updateKyc, getUserKycList, getKycById, createKyc } = require("../../controllers/kycManagement.controller");
 
 // validations setup
 const router = Router();
 const { errHandle } = require("../../utils/errHandle.js");
-router.post("/addKyc", [kycValidation], errHandle(kycRegistration));
+const { authMiddleware } = require("../../middleware/authMiddleware.js");
+router.post("/create", [authMiddleware, kycValidation], errHandle(createKyc));
 router.get("/kycList", getUserKycList);
 router.get("/:_id", errHandle(getKycById));
 router.put("/update", errHandle(updateKyc));
-
 
 module.exports = router;
