@@ -17,6 +17,6 @@ router.post("/login", [loginValidation], errHandle(login));
 router.get("/user_list", [authMiddleware], getUserList);
 router.get("/:_id", [authMiddleware], errHandle(getUserById));
 router.put("/update", [authMiddleware, userValidation], errHandle(updateUser));
-router.post("/create_mpin", [mpinValidation], errHandle(createMpin));
+
 
 module.exports = router;
