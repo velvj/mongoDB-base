@@ -1,44 +1,252 @@
 {
-  "swagger": "2.0",
-  "info": {
-    "version": "1.0.0",
-    "title": "Thangamayil Project",
-    "description": "Thangamayil Project Api's",
-    "license": {
-      "name": "MIT",
-      "url": "https://opensource.org/licenses/MIT"
-    }
-  },
-  "basePath": "/admin/v1/",
-  "schemes": ["http", "https"],
-  "consumes": ["application/json"],
-  "produces": ["application/json"],
-  "securityDefinitions": {
-    "Bearer": {
-      "name": "Authorization",
-      "in": "header",
-      "type": "apiKey",
-      "description": "JWT Authorization header"
-    }
-  },
-
-  
-  "definitions": {
-    "error": {
-      "type": "object",
-      "properties": {
-        "code": { "type": "string" },
-        "details": { "type": "string" },
-        "message": { "type": "string" }
-      }
-    },
-    "response": {
-      "type": "object",
-      "properties": {
-        "token": {
-          "type": "string"
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Thangamayil Project",
+        "description": "Thangamayil Project Api's",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
         }
-      }
+    },
+    "basePath": "/user/api/v1/user",
+    "schemes": ["http", "https"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+    "securityDefinitions": {
+        "Bearer": {
+            "name": "auth",
+            "in": "header",
+            "type": "apiKey",
+            "description": "JWT Authorization header"
+        }
+    },
+
+    "paths": {
+        "/add_user": {
+            "post": {
+                "summary": "Create new user",
+                "tags": ["User Management"],
+                "parameters": [{
+                    "name": "user",
+                    "in": "body",
+                    "schema": {
+                        "$ref": "#/components/user"
+                    }
+                }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/user"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": " Bad request"
+                    },
+                    "200": {
+                        "description": "User created successfully"
+                    }
+                }
+            }
+        },
+        "/verify_otp": {
+            "post": {
+                "summary": "OTP Verification",
+                "tags": ["User Management"],
+                "parameters": [{
+                    "name": "user",
+                    "in": "body",
+                    "schema": {
+                        "$ref": "#/components/user"
+                    }
+                }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/user"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": " Bad request"
+                    },
+                    "200": {
+                        "description": "OTP verified"
+                    }
+                }
+            }
+        },
+        "/create_mpin": {
+            "post": {
+                "summary": "MPIN Creation",
+                "tags": ["User Management"],
+                "parameters": [{
+                    "name": "user",
+                    "in": "body",
+                    "schema": {
+                        "$ref": "#/components/user"
+                    }
+                }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/user"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": " Bad request"
+                    },
+                    "200": {
+                        "description": "MPIN Updated Successfully"
+                    }
+                }
+            }
+        },
+        "/login": {
+            "post": {
+                "summary": "Login",
+                "tags": ["User Management"],
+                "parameters": [{
+                    "name": "user",
+                    "in": "body",
+                    "schema": {
+                        "$ref": "#/components/user"
+                    }
+                }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/user"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": " Bad request"
+                    },
+                    "200": {
+                        "description": "Login Successful"
+                    }
+                }
+            }
+        },
+        "/user_list": {
+            "get": {
+                "tags": ["User Management"],
+                "security": [{ "Bearer": [] }],
+                "summary": "get list of all Users",
+                "responses": {
+                    "200": {
+                        "description": "Returns a JSON response of all users. "
+                    },
+                    "404": {
+                        "description": "List Not Found"
+                    }
+                }
+            }
+        },
+        "/{_id}": {
+            "get": {
+                "tags": ["Waiting Charge Management"],
+                "security": [{ "Bearer": [] }],
+                "summary": "get user details",
+                "parameters": [{
+                    "name": "_id",
+                    "in": "path",
+                    "type": "string"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Return a JSON response of user whose id is mentioned"
+                    },
+                    "404": {
+                        "description": "User Not Found"
+                    }
+                }
+            }
+        },
+        "/update": {
+            "put": {
+                "tags": ["User Management"],
+                "security": [{ "Bearer": [] }],
+                "summary": "update user details",
+                "parameters": [{
+                    "name": "user",
+                    "in": "body",
+                    "schema": {
+                        "$ref": "#/components/user"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Return a JSON response of updated user details"
+                    },
+                    "400": {
+                        "description": " Bad request"
+                    }
+                }
+            }
+        },
+
+        "components": {
+            "securitySchemes": {
+                "add_user": {
+                    "type": "http",
+                    "scheme": "bearer",
+                    "bearerFormat": "JWT"
+                }
+            }
+        },
+        "user": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "mobileNumber": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "otp": {
+                    "type": "number"
+                },
+                "isOtpVerified": {
+                    "type": "boolean",
+                    "default": false
+                },
+                "mpin": {
+                    "type": "number"
+                },
+                "isOtpSent": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "isDeleted": {
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "example": {
+                "name": "Deepak Kumar",
+                "mobileNumber": "7010744555",
+                "email": "timrocks@gmail.com"
+            }
+        }
+
     }
-  }
 }
