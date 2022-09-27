@@ -5,6 +5,7 @@ const userKyc = require('../models/kyc')
 
 const createKycService = async(params = {}) => {
     try {
+        console.log('para', params)
         const Kyc = new userKyc(params)
         const savedKyc = await Kyc.save()
         const post = await userKyc.populate(savedKyc, { path: 'userId', select: ['name', 'mobileNumber', 'email', 'otp'] })
