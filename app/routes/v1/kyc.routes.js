@@ -1,7 +1,7 @@
 const { Router } = require("express");
 
 // validator schemas
-const { kycValidation } = require("../../validator/validator.js");
+const { kycValidation } = require("../../validator/kycvalid");
 
 //Controllers
 const { kycRegistration, updateKyc, getUserKycList, getKycById } = require("../../controllers/kycManagement.controller");
