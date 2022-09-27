@@ -56,17 +56,7 @@ const queryParamValidation = (req, res, next, schama) => {
     }
 };
 
-
-const verifyOtpValidation = (req, res, next) => {
-    const schema = joi.object({
-        id: joi.string().required(),
-        otp: joi.number().required()
-    })
-    return bodyParamValidation(req, res, next, schema)
-}
-
 module.exports = {
     bodyParamValidation,
-    queryParamValidation,
-    verifyOtpValidation
+    queryParamValidation
 };

@@ -1,25 +1,5 @@
 const joi = require("joi");
-const { statusCodes } = require("../response/httpStatusCodes");
-const { statusMessage } = require("../response/httpStatusMessages");
-const { joierrors } = require("../response/response");
-const options = {
-    // generic option
-    basic: {
-        abortEarly: false,
-        convert: true,
-        allowUnknown: false,
-        stripUnknown: true,
-    },
-    // Options for Array of array
-    array: {
-        abortEarly: false,
-        convert: true,
-        allowUnknown: true,
-        stripUnknown: {
-            objects: true,
-        },
-    },
-};
+const { bodyParamValidation } = require("./validator");
 
 const loginValidation = (req, res, next) => {
     const schema = joi.object({
@@ -28,7 +8,6 @@ const loginValidation = (req, res, next) => {
     });
     return bodyParamValidation(req, res, next, schema);
 };
-
 
 const userValidation = (req, res, next) => {
     const schema = joi.object({
@@ -42,7 +21,25 @@ const userValidation = (req, res, next) => {
     return bodyParamValidation(req, res, next, schema)
 }
 
+const mpinValidation = (req, res, next) => {
+    const schema = joi.object({
+        id: joi.string().required(),
+        mpin: joi.number().required()
+    })
+    return bodyParamValidation(req, res, next, schema)
+}
+
+const verifyOtpValidation = (req, res, next) => {
+    const schema = joi.object({
+        id: joi.string().required(),
+        otp: joi.number().required()
+    })
+    return bodyParamValidation(req, res, next, schema)
+}
+
 module.exports={
     loginValidation,
-    userValidation
+    userValidation,
+    mpinValidation,
+    verifyOtpValidation
 }
