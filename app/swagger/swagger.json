@@ -160,7 +160,7 @@
         },
         "/user/{_id}": {
             "get": {
-                "tags": ["Waiting Charge Management"],
+                "tags": ["User Management"],
                 "security": [{ "Bearer": [] }],
                 "summary": "get user details",
                 "parameters": [{
@@ -193,6 +193,93 @@
                 "responses": {
                     "200": {
                         "description": "Return a JSON response of updated user details"
+                    },
+                    "400": {
+                        "description": " Bad request"
+                    }
+                }
+            }
+        },
+
+
+        "/kyc/create": {
+            "post": {
+                "summary": "Create new userKYC",
+                "security": [{ "Bearer": [] }],
+                "tags": ["KYC Management"],
+                "parameters": [{
+                    "name": "kyc",
+                    "in": "body",
+                    "schema": {
+                        "$ref": "#/components/kyc"
+                    }
+                }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/kyc"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": " Bad request"
+                    },
+                    "200": {
+                        "description": "User KYC created successfully"
+                    }
+                }
+            }
+        },
+        "/kyc/kycList": {
+            "get": {
+                "tags": ["KYC Management"],
+                "summary": "get list of all KYCs",
+                "responses": {
+                    "200": {
+                        "description": "Returns a JSON response of all user KYCs. "
+                    },
+                    "404": {
+                        "description": "List Not Found"
+                    }
+                }
+            }
+        },
+        "/kyc/{_id}": {
+            "get": {
+                "tags": ["KYC Management"],
+                "summary": "get user details",
+                "parameters": [{
+                    "name": "_id",
+                    "in": "path",
+                    "type": "string"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Return a JSON response of user KYC whose id is mentioned"
+                    },
+                    "404": {
+                        "description": "User Not Found"
+                    }
+                }
+            }
+        },
+        "/kyc/update": {
+            "put": {
+                "tags": ["KYC Management"],
+                "summary": "update KYC details",
+                "parameters": [{
+                    "name": "kyc",
+                    "in": "body",
+                    "schema": {
+                        "$ref": "#/components/kyc"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Return a JSON response of updated user KYC details"
                     },
                     "400": {
                         "description": " Bad request"
@@ -245,6 +332,50 @@
                 "name": "Deepak Kumar",
                 "mobileNumber": "7010744555",
                 "email": "timrocks@gmail.com"
+            }
+        },
+        "kyc": {
+            "type": "object",
+            "properties": {
+                "userId": {
+                    "type": "string"
+                },
+                "address": {
+                    "type": "string"
+                },
+                "pinCode": {
+                    "type": "string"
+                },
+                "panNo": {
+                    "type": "string"
+                },
+                "nomineeDetails": {
+                    "type": "string"
+                },
+                "nearestShowroom": {
+                    "type": "string"
+                },
+                "referralEmpCode": {
+                    "type": "string"
+                },
+                "isAcceptedTerms": {
+                    "type": "boolean",
+                    "default": true
+                },
+                "isDeleted": {
+                    "type": "boolean",
+                    "default": false
+                }
+            },
+            "example": {
+                "userId": "6332b35d3b7cc5a22aabe408",
+                "address": "Ayanavaram, Chennai",
+                "pinCode": "600023",
+                "panNo": "7755331100",
+                "nomineeDetails": "John Doe",
+                "nearestShowroom": "T-Nagar, Chennai",
+                "referralEmpCode": "TGM 45211",
+                "isAcceptedTerms": true
             }
         }
 

@@ -44,9 +44,9 @@ const getAllKycsService = async() => {
     }
 }
 
-const getKycService = async(params) => {
+const getKycService = async(_id) => {
     try {
-        const kyc = await userKyc.find({ _id: params._id }).populate('userId', 'name mobileNumber email otp').select(['-_id', '-createdAt', '-updatedAt', '-__v'])
+        const kyc = await userKyc.findById(_id).populate('userId', 'name mobileNumber email otp').select(['-_id', '-createdAt', '-updatedAt', '-__v'])
         return {
             status: true,
             data: kyc,
