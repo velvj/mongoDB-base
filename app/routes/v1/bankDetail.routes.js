@@ -2,7 +2,7 @@ const { Router } = require("express");
 
 const { addBankDetail } = require("../../controllers/bankDetails.controller.js");
 const { authMiddleware } = require("../../middleware/authMiddleware.js");
-const { addBankDetailValidation } = require("../../validator/validator.js");
+const { addBankDetailValidation } = require("../../validator/bankdetail");
 const { errHandle } = require("../../utils/errHandle.js");
 
 const router = Router();

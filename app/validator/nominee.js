@@ -21,24 +21,13 @@ const options = {
     },
 };
 
-
-
-
-
-const kycValidation = (req, res, next) => {
+const addNomineeValidation = (req, res, next) => {
     const schema = joi.object({
-        address: joi.string().required(),
-        pinCode: joi.string().length(6).required(),
-        panNo: joi.string().length(10).required(),
-        nomineeDetails: joi.string().required(),
-        nearestShowroom: joi.string(),
-        referralEmpCode: joi.string().required(),
-        isAcceptedTerms: joi.boolean().required(),
-        isDeleted: joi.boolean()
+        name: joi.string().required(),
+        email: joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).lowercase().required(),
+        mobileNumber: joi.string().length(10).required(),
     })
     return bodyParamValidation(req, res, next, schema)
 }
 
-module.exports={
-    kycValidation
-}
+module.exports={addNomineeValidation}

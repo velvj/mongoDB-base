@@ -3,7 +3,7 @@ const { Router } = require("express");
 const { authMiddleware } = require("../../middleware/authMiddleware.js");
 const { errHandle } = require("../../utils/errHandle.js");
 const { addNominee } = require("../../controllers/nominee.controller.js");
-const { addNomineeValidation } = require("../../validator/validator.js");
+const { addNomineeValidation } = require("../../validator/nominee");
 
 const router = Router();
 
