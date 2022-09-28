@@ -1,6 +1,6 @@
 const { Router } = require("express");
 
-const { userValidation, mpinValidation, verifyOtpValidation, loginValidation, addBankDetailValidation } = require("../../validator/validator.js");
+const { loginValidation, userValidation, mpinValidation, verifyOtpValidation } = require("../../validator/userValidator");
 
 const { userRegistration, updateUser, getUserById, getUserList, createMpin, verifyOtp, login } = require("../../controllers/userManagement.controller");
 
