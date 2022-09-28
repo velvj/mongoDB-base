@@ -36,8 +36,8 @@ const userSchema = new mongoose.Schema({
     },
 }, { timestamps: true })
 
-userSchema.pre('save', async function () {
-    return new Promise(async (resolve, reject) => {
+userSchema.pre('save', async function() {
+    return new Promise(async(resolve, reject) => {
         const mobileNumberExists = await user.findOne({ mobileNumber: this.get('mobileNumber') })
             .then(doc => { return doc ? true : false })
             .catch(err => reject(err));
@@ -45,7 +45,7 @@ userSchema.pre('save', async function () {
             .then(doc => { return doc ? true : false })
             .catch(err => reject(err));
         if (mobileNumberExists || emailExists) {
-            const err = mobileNumberExists ? emailExists ? "Mobile number && Email" : "Mobile number" : emailExists ? "Email" : "";
+            const err = mobileNumberExists ? (emailExists ? "Mobile number && Email" : "Mobile number") : (emailExists ? "Email" : "");
             reject(new Error(err + ' already exist'))
         } else {
             resolve();
