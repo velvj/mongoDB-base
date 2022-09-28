@@ -200,6 +200,37 @@
                 }
             }
         },
+        "/user/change_mpin": {
+            "post": {
+                "summary": "Change MPIN",
+                "security": [{ "Bearer": [] }],
+                "tags": ["User Management"],
+                "parameters": [{
+                    "name": "user",
+                    "in": "body",
+                    "schema": {
+                        "$ref": "#/components/user"
+                    }
+                }],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/user"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": " Bad request"
+                    },
+                    "200": {
+                        "description": "MPIN Updated Successfully"
+                    }
+                }
+            }
+        },
 
 
         "/kyc/create": {
@@ -287,6 +318,29 @@
                 }
             }
         },
+
+
+        "/user/profile/{_id}": {
+            "get": {
+                "tags": ["User Profile Management"],
+                "security": [{ "Bearer": [] }],
+                "summary": "get user profile details",
+                "parameters": [{
+                    "name": "_id",
+                    "in": "path",
+                    "type": "string"
+                }],
+                "responses": {
+                    "200": {
+                        "description": "Return a JSON response of user profile whose id is mentioned"
+                    },
+                    "404": {
+                        "description": "User Profile Not Found"
+                    }
+                }
+            }
+        },
+
 
         "components": {
             "securitySchemes": {

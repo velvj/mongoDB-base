@@ -29,6 +29,14 @@ const mpinValidation = (req, res, next) => {
     return bodyParamValidation(req, res, next, schema)
 }
 
+const changeMpinValidation = (req, res, next) => {
+    const schema = joi.object({
+        currentMpin: joi.number().required(),
+        newMpin: joi.number().required()
+    })
+    return bodyParamValidation(req, res, next, schema)
+}
+
 const verifyOtpValidation = (req, res, next) => {
     const schema = joi.object({
         id: joi.string().required(),
@@ -37,9 +45,10 @@ const verifyOtpValidation = (req, res, next) => {
     return bodyParamValidation(req, res, next, schema)
 }
 
-module.exports={
+module.exports = {
     loginValidation,
     userValidation,
     mpinValidation,
-    verifyOtpValidation
+    verifyOtpValidation,
+    changeMpinValidation
 }
